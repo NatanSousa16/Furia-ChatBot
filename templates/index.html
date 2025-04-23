@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>FURIA Chatbot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
     <div class="chat-container">
         <div class="header">🤖 FURIA Chatbot</div>
@@ -26,14 +24,42 @@
             addMessage("Você", msg);
             input.value = "";
 
-            const res = await fetch("/message", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: msg })
-            });
+            const chatBox = document.getElementById("chat-box");
 
-            const data = await res.json();
-            addMessage("FURIA Bot", data.ree);
+            // Mostrar indicador de digitação
+            const typingIndicator = document.createElement("div");
+            typingIndicator.className = "typing-indicator";
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatBox.appendChild(typingIndicator);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch("/message", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg })
+                });
+
+                if (!res.ok) throw new Error("Erro na resposta");
+                
+                const data = await res.json();
+                chatBox.removeChild(typingIndicator);
+
+                if (data.response) {
+                    addMessage("FURIA Bot", data.response);
+                } else {
+                    addMessage("FURIA Bot", "Resposta inválida 😐");
+                }
+
+            } catch (error) {
+                chatBox.removeChild(typingIndicator);
+                addMessage("FURIA Bot", "Erro de conexão. Tente novamente!");
+                console.error("Erro:", error);
+            }
         }
 
         function addMessage(sender, text) {
@@ -46,5 +72,4 @@
         }
     </script>
 </body>
-
 </html>
