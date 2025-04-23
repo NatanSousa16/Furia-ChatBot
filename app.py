@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS  # Importe o CORS
 
 app = Flask(__name__)
+CORS(app)  # Habilite o CORS
 
 @app.route("/")
 def index():
@@ -8,9 +10,10 @@ def index():
 
 @app.route("/message", methods=["POST"])
 def message():
-    user_msg = request.json["message"]
-
-    # Simulação de respostas do bot
+    user_msg = request.json.get("message")  # Use .get() para evitar KeyError
+    if not user_msg:
+        return jsonify({"error": "Mensagem não fornecida"}), 400
+    
     resposta = gerar_resposta(user_msg)
     return jsonify({"response": resposta})
 
@@ -23,7 +26,7 @@ def gerar_resposta(msg):
     elif "próximo jogo" in msg:
         return "📅 Próxima partida: FURIA vs FaZe - Sexta, 20h"
     else:
-        return "Desculpa, não entendi. Tente: 'últimos jogos', 'kscerato', 'próximo jogo'..."
+        return "Desculpe, não entendi. Tente: 'últimos jogos', 'kscerato', 'próximo jogo'..."
 
 if __name__ == "__main__":
     app.run(debug=True)
