@@ -16,9 +16,22 @@
     </div>
 
     <script>
+        // Adiciona listener para o Enter assim que o documento carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            const userInput = document.getElementById('user-input');
+            
+            // Captura o pressionar de tecla no input
+            userInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Impede comportamento padrão
+                    sendMessage();
+                }
+            });
+        });
+
         async function sendMessage() {
             const input = document.getElementById("user-input");
-            const msg = input.value;
+            const msg = input.value.trim();
             if (!msg) return;
 
             addMessage("Você", msg);
