@@ -1,33 +1,33 @@
-# chatbot.py
+import requests
+from dotenv import load_dotenv
+import os
 
-def get_response(message):
-    message = message.lower()
+# Carregar a chave da API do arquivo .env
+load_dotenv()
+API_KEY = os.getenv("OPENAI_API_KEY")
+BASE_URL = "https://api.openai.com/v1"
 
-    # Saudações
-    if "olá" in message or "oi" in message:
-        return "Olá! 👋 Como posso te ajudar hoje?"
+def get_response(user_message):
+    conversation_history = [
+        {"role": "system", "content": "Você é um assistente atencioso."},
+        {"role": "user", "content": user_message}
+    ]
+    
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
 
-    # Pedidos de ajuda ou explicação
-    if "/help" in message or "o que você pode fazer" in message or "ajuda" in message or "comandos" in message:
-        return (
-            "🛠️ Eu posso te ajudar com:\n"
-            "- Informações sobre a equipe FURIA 🎯\n"
-            "- Jogadores e lineup atual 👊\n"
-            "- Campeonatos e títulos 🏆\n"
-            "- Curiosidades sobre o CS2 ⚡\n"
-            "Também posso fazer animações de torcida usando o comando /torcida! 🔥"
-        )
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": conversation_history
+    }
 
-    # Sobre a FURIA
-    if "furia" in message:
-        return "A FURIA é uma organização brasileira de esports, destaque em CS2, Valorant, R6 e mais! 💛🖤"
+    try:
+        response = requests.post(f"{BASE_URL}/chat/completions", headers=headers, json=data)
+        response.raise_for_status()
+        assistant_response = response.json()['choices'][0]['message']['content']
+        return assistant_response
+    except requests.RequestException as e:
+        return f"Erro ao se comunicar com a API: {e}"
 
-    # Campeonatos
-    if "campeonato" in message or "torneio" in message:
-        return "A FURIA participa de campeonatos como ESL Pro League, BLAST Premier e Majors! 🚀"
-
-    # Torcida
-    if "/torcida" in message:
-        return "🔥 VAMO FURIAAAAA!! 🔥"
-
-    return "Desculpe, não entendi. Pode perguntar de outra forma? 🤔"
