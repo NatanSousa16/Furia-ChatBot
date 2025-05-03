@@ -1,50 +1,50 @@
-# Furia-ChatBot
+💬 ChatFURIA: Chatbot de Fãs da FURIA
+Este projeto é uma aplicação Flask que oferece uma interface de chat interativa com um chatbot especializado no universo da FURIA Esports. Os usuários podem conversar com o bot sobre a equipe, seus jogadores, campeonatos e mais.
 
-Um chatbot desenvolvido para os fãs da equipe FURIA de Counter-Strike 2 (CS2)!  
-Ele permite interações sobre o time, simulações de torcida, dicas de CS2, status ao vivo de jogos e muito mais.
+🚀 Funcionalidades
+Interface web para conversas em tempo real
 
-## Índice
+Respostas geradas por IA com base no contexto da FURIA
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Como Rodar o Projeto](#como-rodar-o-projeto)
-- [Configuração do .env](#configuração-do-env)
-- [Funcionalidades](#funcionalidades)
-- [Contribuindo](#contribuindo)
-- [Licença](#licença)
-- [Contato](#contato)
+Rota /message para receber mensagens do usuário e responder via GPT-4
 
-## Sobre o Projeto
+Arquitetura simples e modular para fácil expansão
 
-O **Furia-ChatBot** é um assistente virtual especializado em CS2 e na equipe FURIA.  
-O chatbot oferece interações com informações sobre a escalação atual, jogos, resultados, títulos, simulação de torcida e dicas de gameplay.
+🧠 Tecnologias Utilizadas
+Python 3.8.10
 
-## Tecnologias Utilizadas
+Flask
 
-- [Rasa](https://rasa.com/) - Framework de IA conversacional
-- [Python 3.8+](https://www.python.org/)
-- [requests](https://pypi.org/project/requests/) - Cliente HTTP para integrar com APIs
-- [python-dotenv](https://pypi.org/project/python-dotenv/) - Gerenciamento de variáveis de ambiente
-- OpenAI API (GPT-4o-mini) - Para respostas inteligentes baseadas em IA
+HTML + CSS (para o front-end do chat)
 
-### Pré-requisitos
+Modelo de IA 
 
-- Python instalado (versão 3.8 ou superior)
-- Conta na OpenAI (para obter sua `OPENAI_API_KEY`)
+📁 Organização do Projeto
+php
+Copiar
+Editar
+chatfuria/
+├── app.py                 # Aplicação principal Flask
+├── chatbot.py             # Lógica do chatbot (get_response)
+├── templates/
+│   └── chat.html          # Interface web do chat
+├── static/
+│   ├── style.css          # Estilo visual (opcional)
 
-  
-## Como Rodar o Projeto
-### Passo a Passo
+🔒 Segurança e Privacidade
+O chat não armazena histórico das conversas
 
-1. **Clone o repositório:**
+Nenhuma informação pessoal do usuário é solicitada
 
-   Clone o projeto para o seu diretório de trabalho com o comando abaixo. Ele irá baixar todos os arquivos do repositório para sua máquina:
+Estrutura preparada para futura integração com login seguro e API
 
-   ```bash
-   git clone https://github.com/NatanSousa16/Furia-ChatBot.git
+⚙️ Como Executar Localmente
+Clone o repositório:
+git clone https://github.com/seuusuario/chatfuria.git
+cd chatfuria
 
-2. **Inicie o Codigo**
+Execute a aplicação:
+python3 app.py
 
-   python3 app.py
-
-  
+Acesse via navegador:
+http://127.0.0.1:5000
